@@ -50,7 +50,7 @@ elib_log_err_t elib_log_init(elib_log_ctx_t *ctx, const elib_log_cfg_t *cfg)
     memset(ctx, 0, sizeof(elib_log_ctx_t));
     ctx->cfg = cfg;
     ctx->min_level = ELIB_LOG_INFO;
-    ctx->initialized = 1;
+    ctx->bit_flags.initialized = 1;
 
     return ELIB_LOG_OK;
 }
@@ -60,7 +60,7 @@ void elib_log_deinit(elib_log_ctx_t *ctx)
     if (ctx == NULL) {
         return;
     }
-    ctx->initialized = 0;
+    ctx->bit_flags.initialized = 0;
 }
 
 elib_log_err_t elib_log_log(elib_log_ctx_t *ctx, elib_log_level_t level,
@@ -69,7 +69,7 @@ elib_log_err_t elib_log_log(elib_log_ctx_t *ctx, elib_log_level_t level,
     if (ctx == NULL) {
         return ELIB_LOG_ERR_INVALID_PARAM;
     }
-    if (!ctx->initialized) {
+    if (!ctx->bit_flags.initialized) {
         return ELIB_LOG_ERR_NOT_INITIALIZED;
     }
     if (level < ctx->min_level) {
@@ -117,7 +117,7 @@ elib_log_err_t elib_log_hex(elib_log_ctx_t *ctx, elib_log_level_t level,
     if (ctx == NULL) {
         return ELIB_LOG_ERR_INVALID_PARAM;
     }
-    if (!ctx->initialized) {
+    if (!ctx->bit_flags.initialized) {
         return ELIB_LOG_ERR_NOT_INITIALIZED;
     }
     if (len > 0 && data == NULL) {
@@ -167,7 +167,7 @@ elib_log_err_t elib_log_set_level(elib_log_ctx_t *ctx, elib_log_level_t min_leve
     if (ctx == NULL) {
         return ELIB_LOG_ERR_INVALID_PARAM;
     }
-    if (!ctx->initialized) {
+    if (!ctx->bit_flags.initialized) {
         return ELIB_LOG_ERR_NOT_INITIALIZED;
     }
     if ((int)min_level < 0 || (int)min_level > ELIB_LOG_DEBUG) {
@@ -179,7 +179,7 @@ elib_log_err_t elib_log_set_level(elib_log_ctx_t *ctx, elib_log_level_t min_leve
 
 elib_log_level_t elib_log_get_level(elib_log_ctx_t *ctx)
 {
-    if (ctx == NULL || !ctx->initialized) {
+    if (ctx == NULL || !ctx->bit_flags.initialized) {
         return ELIB_LOG_ERROR;
     }
     return ctx->min_level;

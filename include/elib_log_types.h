@@ -35,7 +35,9 @@ typedef struct {
 typedef struct {
     const elib_log_cfg_t *cfg;
     elib_log_level_t      min_level;
-    int                   initialized;
+    struct {
+        uint8_t initialized : 1;
+    } bit_flags;
 } elib_log_ctx_t;
 
 #ifdef __cplusplus

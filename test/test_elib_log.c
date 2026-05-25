@@ -53,7 +53,7 @@ static void test_init_valid(void)
         .timestamp = NULL,
     };
     assert(elib_log_init(&ctx, &cfg) == ELIB_LOG_OK);
-    assert(ctx.initialized == 1);
+    assert(ctx.bit_flags.initialized == 1);
     assert(ctx.min_level == ELIB_LOG_INFO);
     elib_log_deinit(&ctx);
 }
@@ -138,7 +138,7 @@ static void test_deinit_valid(void)
     };
     elib_log_init(&ctx, &cfg);
     elib_log_deinit(&ctx);
-    assert(ctx.initialized == 0);
+    assert(ctx.bit_flags.initialized == 0);
 }
 
 static void test_deinit_null(void)
