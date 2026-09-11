@@ -81,7 +81,7 @@ elib_log_err_t elib_log_log(elib_log_ctx_t *ctx, elib_log_level_t level,
     uint16_t pos = 0;
 
     pos = buf_append(buf, size, pos, COLOR_RESET_LEN, "\r\n");
-    if ((int)level >= 0 && (int)level <= ELIB_LOG_DEBUG) {
+    if ((int)level <= ELIB_LOG_DEBUG) {
         pos = buf_append(buf, size, pos, COLOR_RESET_LEN, "%s", level_colors[level]);
     }
 
@@ -132,7 +132,7 @@ elib_log_err_t elib_log_hex(elib_log_ctx_t *ctx, elib_log_level_t level,
     uint16_t pos = 0;
 
     pos = buf_append(buf, size, pos, COLOR_RESET_LEN, "\r\n");
-    if ((int)level >= 0 && (int)level <= ELIB_LOG_DEBUG) {
+    if ((int)level <= ELIB_LOG_DEBUG) {
         pos = buf_append(buf, size, pos, COLOR_RESET_LEN, "%s", level_colors[level]);
     }
 
@@ -170,7 +170,7 @@ elib_log_err_t elib_log_set_level(elib_log_ctx_t *ctx, elib_log_level_t min_leve
     if (!ctx->bit_flags.initialized) {
         return ELIB_LOG_ERR_NOT_INITIALIZED;
     }
-    if ((int)min_level < 0 || (int)min_level > ELIB_LOG_DEBUG) {
+    if ((int)min_level > ELIB_LOG_DEBUG) {
         return ELIB_LOG_ERR_INVALID_PARAM;
     }
     ctx->min_level = min_level;
